@@ -14,10 +14,23 @@ static const char HSIDE_CHAR  = '-';
 
 int initialize(void)
 {
-  int i;
-  int j;
+  int pos_y;
+  int pos_x;
 
-  for (i = 0; i < MAXWIDTH; ++i)
+  for (pos_y = 0; pos_y < MAXHEIGHT; ++pos_y) {
+    for (pos_x = 0; pos_x < MAXWIDTH; ++pos_x) {
+      if ((pos_x == 0 || pos_x == MAXWIDTH-1)
+          && (pos_y == 0 || pos_y == MAXHEIGHT-1))
+	putchar('+');
+      else if (pos_x == 0 || pos_x == MAXWIDTH-1)
+	putchar('|');
+      else if (pos_y == 0 || pos_y == MAXHEIGHT-1)
+	putchar('-');
+      else
+	putchar(' ');
+    }
+    putchar('\n');
+  }
 }
 
 int prints(char *s);
