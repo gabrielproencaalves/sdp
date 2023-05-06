@@ -45,7 +45,15 @@ void initialize(void)
   CURSOR_X = CURSOR_Y = 1; /* define x/y cursor coordinates */
 }
 
-int prints(char *s);
+int prints(char *s)
+{
+  int i;
+
+  for (i = 0; s[i] != '\0'; ++i)
+    if(!printc(s[i]))
+      return 0;
+  return i;
+}
 
 int printc(int c)
 {
@@ -54,7 +62,6 @@ int printc(int c)
       return 0;
   putchar(c);
   CURSOR_X++;
-    
 }
 
 int newline(void)
