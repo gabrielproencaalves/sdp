@@ -12,7 +12,7 @@
 static int CURSOR_Y;
 static int CURSOR_X;
 
-int initialize(void)
+void initialize(void)
 {
   int pos_y; /* line */
   int pos_x; /* column */
@@ -47,4 +47,23 @@ int initialize(void)
 
 int prints(char *s);
 
-int printc(int c);
+int printc(int c)
+{
+  if ((CURSOR_X == MAXWIDTH - VMARGIN) || (c == '\n'))
+    if (!newline())
+      return 0;
+  putchar(c);
+  CURSOR_X++;
+    
+}
+
+int newline(void)
+{
+  if (CURSOR_Y == MAXHEIGHT - HMARGIN)
+	return 0;
+  CNL(1);
+  CUF(VMARGIN);
+  CURSOR_X = 1;
+  CURSOR_Y++;
+  return 1;
+}
