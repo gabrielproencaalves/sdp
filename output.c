@@ -48,3 +48,14 @@ int initialize(void)
 int prints(char *s);
 
 int printc(int c);
+
+int newline(void)
+{
+  if (CURSOR_Y == MAXHEIGHT - HMARGIN)
+	return 0;
+  CNL(1);
+  CUF(VMARGIN);
+  CURSOR_X = 1;
+  CURSOR_Y++;
+  return 1;
+}
