@@ -62,11 +62,12 @@ int printc(int c)
       return 0;
   putchar(c);
   CURSOR_X++;
+  return c;
 }
 
 int newline(void)
 {
-  if (CURSOR_Y == MAXHEIGHT - HMARGIN)
+  if (CURSOR_Y == MAXHEIGHT - HMARGIN - 1)
 	return 0;
   CNL(1);
   CUF(VMARGIN);
