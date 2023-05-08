@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include "escapes.h"
-#define MAXWIDTH  80 /* Default vt* width:         80 chars */
-#define MAXHEIGHT 24 /* Default vt* height:        24 chars */
-#define TABWIDTH  4  /* Default tab width:          4 spaces */
-#define VMARGIN 1    /* Default vert. margin size:  1 char */
-#define HMARGIN 1    /* Default hor. margin size:   1 char */
-#define VSIDE_CHAR  '|'
-#define HSIDE_CHAR  '-'
-#define CORNER_CHAR '+'
+#define MAXWIDTH     80 /* Default vt* width:          80  chars  */
+#define MAXHEIGHT    24 /* Default vt* height:         24  chars  */
+#define TABWIDTH      4 /* Default tab width:           4  spaces */
+#define VMARGIN       1 /* Default vert. margin size:   1  char   */
+#define HMARGIN       1 /* Default hor. margin size:    1  char   */
+#define VSIDE_CHAR  '|' /* Default vert. margin char:  '|'        */
+#define HSIDE_CHAR  '-' /* Defaukt hor. margin char:   '-'        */
+#define CORNER_CHAR '+' /* Default corner margin char: '+'        */
 
 static int CURSOR_Y;
 static int CURSOR_X;
@@ -49,10 +49,10 @@ int prints(char *s)
 {
   int i;
 
-  for (i = 0; s[i] != '\0'; ++i)
-    if(!printc(s[i]))
-      return 0;
-  return i;
+  for (i = 0; s[i] != '\0'; ++i) /* until reaching the end of s */
+    if(!printc(s[i])) /* if chars cannot be printed */
+      return 0; /* bad signal */
+  return i; /* return number of printed characters */
 }
 
 int printc(int c)
