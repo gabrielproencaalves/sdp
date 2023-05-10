@@ -9,9 +9,10 @@
 #define HSIDE_CHAR  '-' /* Defaukt hor. margin char:   '-'        */
 #define CORNER_CHAR '+' /* Default corner margin char: '+'        */
 
-static int CURSOR_Y;
-static int CURSOR_X;
+static int CURSOR_Y; /* Current Y cursor position */
+static int CURSOR_X; /* Current X cursor position */
 
+/* initialize: set up panel and variables */
 void initialize(void)
 {
   int pos_y; /* line */
@@ -20,58 +21,64 @@ void initialize(void)
   for (pos_y = 0; pos_y < MAXHEIGHT; ++pos_y) {
     for (pos_x = 0; pos_x < MAXWIDTH; ++pos_x) {
 
-      /* if pos_x and pos_y in the corner */
+      /* If pos_x and pos_y in the corner */
       if (   (pos_x < VMARGIN || pos_x > MAXWIDTH-VMARGIN-1)
           && (pos_y < HMARGIN || pos_y > MAXHEIGHT-HMARGIN-1))
-	putchar(CORNER_CHAR); /* print the corner char*/
+	putchar(CORNER_CHAR); /* Print the corner char*/
 
-      /* if pos_x in vert. margin */
+      /* If pos_x in vert. margin */
       else if (pos_x < VMARGIN || pos_x > MAXWIDTH-VMARGIN-1)
-	putchar(VSIDE_CHAR); /* print the vert. margin char */
+	putchar(VSIDE_CHAR); /* Print the vert. margin char */
 
-      /* if pos_y in hor. margin */
+      /* If pos_y in hor. margin */
       else if (pos_y < HMARGIN || pos_y > MAXHEIGHT-HMARGIN-1)
-	putchar(HSIDE_CHAR); /* print the hor. margin char */
+	putchar(HSIDE_CHAR); /* Print the hor. margin char */
 
-      /* else, just print a space */
+      /* Else, just print a space */
       else
 	putchar(' ');
     }
     putchar('\n');
   }
-  CPL(MAXHEIGHT - HMARGIN); /* go to the first empty */
+  CPL(MAXHEIGHT - HMARGIN); /* Go to the first empty */
   CUF(VMARGIN);             /* position inside square */
 
-  CURSOR_X = CURSOR_Y = 1; /* define x/y cursor coordinates */
+  CURSOR_X = CURSOR_Y = 1; /* Define x/y cursor coordinates */
 }
 
-int prints(char *s)
+/* printc(c): print the character c on panel*/
+int printc(char c)
 {
-  int i;
-
-  for (i = 0; s[i] != '\0'; ++i) /* until reaching the end of s */
-    if(!printc(s[i])) /* if chars cannot be printed */
-      return 0; /* bad signal */
-  return i; /* return number of printed characters */
-}
-
-int printc(int c)
-{
+  /* If cursor reaches the margin or */
+  /* the character to be printed is a newline*/
   if ((CURSOR_X == MAXWIDTH - VMARGIN) || (c == '\n'))
-    if (!newline())
-      return 0;
+    if (!newline()) /* If unable to print newline */
+      return 0; /* Bad signal */
   putchar(c);
   CURSOR_X++;
   return c;
 }
 
+/* prints(s): print the string s on panel */
+int prints(char *s)
+{
+  int i;
+
+  for (i = 0; s[i] != '\0'; ++i) /* Until reaching the end of s */
+    if(!printc(s[i])) /* If chars cannot be printed */
+      return 0; /* Bad signal */
+  return i; /* Return number of printed characters */
+}
+
+/* newline: print a newline on panel */
 int newline(void)
 {
+  /* If cursor is on last line */
   if (CURSOR_Y == MAXHEIGHT - HMARGIN - 1)
-	return 0;
-  CNL(1);
-  CUF(VMARGIN);
+    return 0; /* Bad signal */
+  CNL(1); /* Move cursor down */
+  CUF(VMARGIN); /* Move cursor forward to inside panel */
   CURSOR_X = 1;
   CURSOR_Y++;
-  return 1;
+  return 1; /* oh yeah */
 }
