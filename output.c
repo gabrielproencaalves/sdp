@@ -9,29 +9,27 @@
 #define HSIDE_CHAR  '-' /* Defaukt hor. margin char:   '-'        */
 #define CORNER_CHAR '+' /* Default corner margin char: '+'        */
 
-static int CURSOR_Y; /* Current Y cursor position */
-static int CURSOR_X; /* Current X cursor position */
+static int CURSOR_X;    /* Current X cursor position */
+static int CURSOR_Y;    /* Current Y cursor position */
 
 /* initialize: set up panel and variables */
 void initialize(void)
 {
-  int pos_y; /* line */
-  int pos_x; /* column */
 
-  for (pos_y = 0; pos_y < MAXHEIGHT; ++pos_y) {
-    for (pos_x = 0; pos_x < MAXWIDTH; ++pos_x) {
+  for (CURSOR_Y = 0; CURSOR_Y < MAXHEIGHT; ++CURSOR_Y) {
+    for (CURSOR_X = 0; CURSOR_X < MAXWIDTH; ++CURSOR_X) {
 
-      /* If pos_x and pos_y in the corner */
-      if (   (pos_x < VMARGIN || pos_x > MAXWIDTH-VMARGIN-1)
-          && (pos_y < HMARGIN || pos_y > MAXHEIGHT-HMARGIN-1))
+      /* If CURSOR_X and CURSOR_Y in the corner */
+      if (   (CURSnOR_X < VMARGIN || CURSOR_X > MAXWIDTH-VMARGIN-1)
+          && (CURSOR_Y < HMARGIN || CURSOR_Y > MAXHEIGHT-HMARGIN-1))
 	putchar(CORNER_CHAR); /* Print the corner char*/
 
-      /* If pos_x in vert. margin */
-      else if (pos_x < VMARGIN || pos_x > MAXWIDTH-VMARGIN-1)
+      /* If CURSOR_X in vert. margin */
+      else if (CURSOR_X < VMARGIN || CURSOR_X > MAXWIDTH-VMARGIN-1)
 	putchar(VSIDE_CHAR); /* Print the vert. margin char */
 
-      /* If pos_y in hor. margin */
-      else if (pos_y < HMARGIN || pos_y > MAXHEIGHT-HMARGIN-1)
+      /* If CURSOR_Y in hor. margin */
+      else if (CURSOR_Y < HMARGIN || CURSOR_Y > MAXHEIGHT-HMARGIN-1)
 	putchar(HSIDE_CHAR); /* Print the hor. margin char */
 
       /* Else, just print a space */
