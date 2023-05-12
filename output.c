@@ -20,7 +20,7 @@ void initialize(void)
     for (CURSOR_X = 0; CURSOR_X < MAXWIDTH; ++CURSOR_X) {
 
       /* If CURSOR_X and CURSOR_Y in the corner */
-      if (   (CURSnOR_X < VMARGIN || CURSOR_X > MAXWIDTH-VMARGIN-1)
+      if (   (CURSOR_X < VMARGIN || CURSOR_X > MAXWIDTH-VMARGIN-1)
           && (CURSOR_Y < HMARGIN || CURSOR_Y > MAXHEIGHT-HMARGIN-1))
 	putchar(CORNER_CHAR); /* Print the corner char*/
 
@@ -79,4 +79,31 @@ int newline(void)
   CURSOR_X = 1;
   CURSOR_Y++;
   return 1; /* oh yeah */
+}
+
+void movecur(int x, int y)
+{
+  if (CURSOR_Y != y)
+    CURSOR_X = 0;
+
+  while (CURSOR_Y != y) {
+    if (CURSOR_Y > y) {
+      CPL(1);
+      --CURSOR_Y;
+    }
+    else {
+      CNL(1);
+      ++CURSOR_Y;
+    }
+  }
+  while (CURSOR_X != x) {
+    if (CURSOR_X > x) {
+      CUB(1);
+      --CURSOR_X;
+    }
+    else {
+      CUF(1);
+      ++CURSOR_X;
+    }
+  }
 }
