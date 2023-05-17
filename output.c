@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "escapes.h"
-#include "sdp.h"
+#include "config.h"
 
 static int CURSOR_X;    /* Current X cursor position */
 static int CURSOR_Y;    /* Current Y cursor position */
