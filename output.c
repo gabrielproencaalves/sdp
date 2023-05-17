@@ -1,16 +1,14 @@
 #include <stdio.h>
 #include "escapes.h"
-#define MAXWIDTH     80 /* Default vt* width:          80  chars  */
-#define MAXHEIGHT    24 /* Default vt* height:         24  chars  */
-#define TABWIDTH      4 /* Default tab width:           4  spaces */
-#define VMARGIN       1 /* Default vert. margin size:   1  char   */
-#define HMARGIN       1 /* Default hor. margin size:    1  char   */
-#define VSIDE_CHAR  '|' /* Default vert. margin char:  '|'        */
-#define HSIDE_CHAR  '-' /* Defaukt hor. margin char:   '-'        */
-#define CORNER_CHAR '+' /* Default corner margin char: '+'        */
+#include "sdp.h"
 
 static int CURSOR_X;    /* Current X cursor position */
 static int CURSOR_Y;    /* Current Y cursor position */
+
+#define CURSOR_FORWARD(x)  CUF((x)); CURSOR_X += (x);
+#define CURSOR_BACKWARD(x) CUB((x)); CURSOR_X -= (x);
+#define CURSOR_UPWARD(x)   CPL((x)); CURSOR_Y -= (x);
+#define CURSOR_DOWNWARD(x) CNL((x)); CURSOR_Y += (x);
 
 /* initialize: set up panel and variables */
 void initialize(void)
