@@ -4,11 +4,33 @@
 
 static int CURSOR_X;    /* Current X cursor position */
 static int CURSOR_Y;    /* Current Y cursor position */
+static int LAST_PRINTL; /* Last printed line         */
 
-#define CURSOR_FORWARD(x)  CUF((x)); CURSOR_X += (x);
-#define CURSOR_BACKWARD(x) CUB((x)); CURSOR_X -= (x);
-#define CURSOR_UPWARD(x)   CPL((x)); CURSOR_Y -= (x); CUF(CURSOR_X);
-#define CURSOR_DOWNWARD(x) CNL((x)); CURSOR_Y += (x); CUF(CURSOR_X);
+#define CURSOR_FORWARD(x) \
+  do {                    \
+    CUF((x));             \
+    CURSOR_X += (x);      \
+  } while (0)
+
+#define CURSOR_BACKWARD(x) \
+  do {                     \
+    CUB((x));              \
+    CURSOR_X -= (x);       \
+  } while (0)
+
+#define CURSOR_UPWARD(x)         \
+  do {                           \
+    CPL((x));                    \
+    CURSOR_Y -= (x);             \
+    CUF(CURSOR_X + VMARGIN - 1); \
+  } while (0)
+
+#define CURSOR_DOWNWARD(x)       \
+  do {                           \
+    CNL((x));                    \
+    CURSOR_Y += (x);             \
+    CUF(CURSOR_X + VMARGIN - 1); \
+  } while (0)
 
 /* initialize: set up panel and variables */
 void initialize(void)
@@ -40,6 +62,7 @@ void initialize(void)
   CUF(VMARGIN);             /* position inside square */
 
   CURSOR_X = CURSOR_Y = 1; /* Define x/y cursor coordinates */
+  LAST_PRINTL = 1; /* Set last printed line variable to 1 */
 }
 
 /* printc(c): print the character c on panel*/
@@ -86,20 +109,16 @@ void movecur(int x, int y)
     return;
 
   if (CURSOR_Y != y) {
-    if (CURSOR_Y > y) {
+    if (CURSOR_Y > y)
       CURSOR_UPWARD(CURSOR_Y - y);
-    }
-    else {
+    else
       CURSOR_DOWNWARD(y - CURSOR_Y);
-    }
   }
 
   if (CURSOR_X != x) {
-    if (CURSOR_X > x) {
+    if (CURSOR_X > x)
       CURSOR_BACKWARD(CURSOR_X - x);
-    }
-    else {
+    else
       CURSOR_FORWARD(x - CURSOR_X);
-    }
   }
 }
