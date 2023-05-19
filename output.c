@@ -5,10 +5,10 @@
 static int CURSOR_X;    /* Current X cursor position */
 static int CURSOR_Y;    /* Current Y cursor position */
 
-#define CURSOR_FORWARD(x)  CUF((x)); CURSOR_X += (x);
-#define CURSOR_BACKWARD(x) CUB((x)); CURSOR_X -= (x);
-#define CURSOR_UPWARD(x)   CPL((x)); CURSOR_Y -= (x); CUF(CURSOR_X);
-#define CURSOR_DOWNWARD(x) CNL((x)); CURSOR_Y += (x); CUF(CURSOR_X);
+#define CURSOR_FORWARD(x)  CUF((x)); CURSOR_X += (x)
+#define CURSOR_BACKWARD(x) CUB((x)); CURSOR_X -= (x)
+#define CURSOR_UPWARD(x)   CPL((x)); CURSOR_Y -= (x); CUF(CURSOR_X)
+#define CURSOR_DOWNWARD(x) CNL((x)); CURSOR_Y += (x); CUF(CURSOR_X)
 
 /* initialize: set up panel and variables */
 void initialize(void)
