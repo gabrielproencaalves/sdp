@@ -104,21 +104,20 @@ int newline(void)
 
 void movecur(int x, int y)
 {
-  if (   x < 1 || x > MAXWIDTH  - VMARGIN * 2
-      || y < 1 || y > MAXHEIGHT - HMARGIN * 2)
+  if (x > MAXWIDTH || y > MAXHEIGHT)
     return;
-
-  if (CURSOR_Y != y) {
-    if (CURSOR_Y > y)
-      CURSOR_UPWARD(CURSOR_Y - y);
-    else
-      CURSOR_DOWNWARD(y - CURSOR_Y);
-  }
 
   if (CURSOR_X != x) {
     if (CURSOR_X > x)
       CURSOR_BACKWARD(CURSOR_X - x);
     else
       CURSOR_FORWARD(x - CURSOR_X);
+  }
+
+  if (CURSOR_Y != y) {
+    if (CURSOR_Y > y)
+      CURSOR_UPWARD(CURSOR_Y - y);
+    else
+      CURSOR_DOWNWARD(y - CURSOR_Y);
   }
 }
