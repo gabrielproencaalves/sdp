@@ -65,6 +65,19 @@ void initialize(void)
   LAST_PRINTL = 1; /* Set last printed line variable to 1 */
 }
 
+/* newline: print a newline on panel */
+int newline(void)
+{
+  /* If cursor is on last line */
+  if (CURSOR_Y == MAXHEIGHT - HMARGIN - 1)
+    return 0; /* Bad signal */
+  CNL(1); /* Move cursor down */
+  CUF(VMARGIN); /* Move cursor forward to inside panel */
+  CURSOR_X = 1;
+  CURSOR_Y++;
+  return 1; /* oh yeah */
+}
+
 /* printc(c): print the character c on panel*/
 int printc(char c)
 {
@@ -86,22 +99,11 @@ int prints(char *s)
   for (i = 0; s[i] != '\0'; ++i) /* Until reaching the end of s */
     if(!printc(s[i])) /* If chars cannot be printed */
       return 0; /* Bad signal */
+
   return i; /* Return number of printed characters */
 }
 
-/* newline: print a newline on panel */
-int newline(void)
-{
-  /* If cursor is on last line */
-  if (CURSOR_Y == MAXHEIGHT - HMARGIN - 1)
-    return 0; /* Bad signal */
-  CNL(1); /* Move cursor down */
-  CUF(VMARGIN); /* Move cursor forward to inside panel */
-  CURSOR_X = 1;
-  CURSOR_Y++;
-  return 1; /* oh yeah */
-}
-
+/* movecur(x, y): moves the cursor to x and y */
 void movecur(int x, int y)
 {
   if (x > MAXWIDTH || y > MAXHEIGHT)
@@ -119,5 +121,19 @@ void movecur(int x, int y)
       CURSOR_UPWARD(CURSOR_Y - y);
     else
       CURSOR_DOWNWARD(y - CURSOR_Y);
+  }
+}
+
+/* clear: clears the panel */
+void clear(void);
+
+/* clearl:  clears the line or x characters */
+void clearl(int n)
+{
+  if (n == 0) {
+    CURSOR_BACKWARD(CURSOR_X - 1);
+    while (CURSOR_X++ <= MAXWIDTH - VMARGIN * 2)
+      putchar(' ');
+    CURSOR_BACKWARD(CURSOR_X - 1);
   }
 }
