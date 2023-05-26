@@ -134,6 +134,6 @@ void clearl(int n)
     CURSOR_BACKWARD(CURSOR_X - 1);
     while (CURSOR_X++ <= MAXWIDTH - VMARGIN * 2)
       putchar(' ');
-    CURSOR_BACKWARD(CURSOR_X - 1);
+    CURSOR_BACKWARD(--CURSOR_X - 1);
   }
 }
