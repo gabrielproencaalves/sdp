@@ -141,3 +141,13 @@ void clearl(void)
   clearc(MAXWIDTH - VMARGIN * 2);
   CURSOR_BACKWARD(CURSOR_X - 1);
 }
+
+/* clear: clears the panel */
+void clear(void)
+{
+  while (CURSOR_Y > 1) {
+    clearl();
+    CURSOR_UPWARD(1);
+  }
+  clearl();
+}

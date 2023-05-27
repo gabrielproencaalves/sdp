@@ -19,3 +19,6 @@ void clearc(int x);
 /* clearl:  clears the line or x characters */
 void clearl(void);
 
+/* clear: clears the panel */
+void clear(void);
+
