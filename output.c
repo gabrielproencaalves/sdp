@@ -70,10 +70,10 @@ int newline(void)
   /* If cursor is on last line */
   if (CURSOR_Y == MAXHEIGHT - HMARGIN - 1)
     return 0; /* Bad signal */
-  CNL(1); /* Move cursor down */
-  CUF(VMARGIN); /* Move cursor forward to inside panel */
-  CURSOR_X = 1;
-  CURSOR_Y++;
+
+  CURSOR_DOWNWARD(1);  /* Move cursor down */
+  CURSOR_BACKWARD(CURSOR_X - 1); /* move cursor to first column */
+
   return 1; /* oh yeah */
 }
 
@@ -83,11 +83,11 @@ int printc(char c)
   /* If cursor reaches the margin or */
   /* the character to be printed is a newline*/
   if ((CURSOR_X == MAXWIDTH - VMARGIN) || (c == '\n'))
-    if (!newline()) /* If unable to print newline */
-      return 0; /* Bad signal */
+    return (!newline()) ? 0 : 1;
 
-	if (CURSOR_Y > LAST_PRINTL)
-		LAST_PRINTL = CURSOR_Y;
+
+  if (CURSOR_Y > LAST_PRINTL)
+    LAST_PRINTL = CURSOR_Y;
 
   putchar(c);
   CURSOR_X++;
@@ -130,15 +130,14 @@ void movecur(int x, int y)
 /* clearc(x): clears x characters */
 void clearc(int x)
 {
-	while (x--)
-		printc(' ');
+  while (x--)
+    printc(' ');
 }
 
 /* clearl:  clears the line */
 void clearl(void)
 {
   CURSOR_BACKWARD(CURSOR_X - 1);
-	clearc(MAXWIDTH - VMARGIN * 2);
-	--CURSOR_X;
+  clearc(MAXWIDTH - VMARGIN * 2);
   CURSOR_BACKWARD(CURSOR_X - 1);
 }
