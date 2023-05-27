@@ -13,8 +13,9 @@ int prints(char*);
 /* movecur(x, y): moves the cursor to x and y */
 void movecur(int, int);
 
-/* clear: clears the panel */
-void clear(void);
+/* clearc(x): clears x characters */
+void clearc(int x);
 
 /* clearl:  clears the line or x characters */
-void clearl(int);
+void clearl(void);
+

@@ -62,7 +62,6 @@ void initialize(void)
   CUF(VMARGIN);             /* position inside square */
 
   CURSOR_X = CURSOR_Y = 1; /* Define x/y cursor coordinates */
-  LAST_PRINTL = 1; /* Set last printed line variable to 1 */
 }
 
 /* newline: print a newline on panel */
@@ -86,6 +85,10 @@ int printc(char c)
   if ((CURSOR_X == MAXWIDTH - VMARGIN) || (c == '\n'))
     if (!newline()) /* If unable to print newline */
       return 0; /* Bad signal */
+
+	if (CURSOR_Y > LAST_PRINTL)
+		LAST_PRINTL = CURSOR_Y;
+
   putchar(c);
   CURSOR_X++;
   return c;
@@ -124,16 +127,18 @@ void movecur(int x, int y)
   }
 }
 
-/* clear: clears the panel */
-void clear(void);
-
-/* clearl:  clears the line or x characters */
-void clearl(int n)
+/* clearc(x): clears x characters */
+void clearc(int x)
 {
-  if (n == 0) {
-    CURSOR_BACKWARD(CURSOR_X - 1);
-    while (CURSOR_X++ <= MAXWIDTH - VMARGIN * 2)
-      putchar(' ');
-    CURSOR_BACKWARD(--CURSOR_X - 1);
-  }
+	while (x--)
+		printc(' ');
+}
+
+/* clearl:  clears the line */
+void clearl(void)
+{
+  CURSOR_BACKWARD(CURSOR_X - 1);
+	clearc(MAXWIDTH - VMARGIN * 2);
+	--CURSOR_X;
+  CURSOR_BACKWARD(CURSOR_X - 1);
 }
