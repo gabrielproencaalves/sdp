@@ -1,0 +1,14 @@
+Implementar clear().
+  Implementar clearl(x), (x = 0 ? linha inteira : x caracteres).
+    Adicionar condição de "se valor x = 0" em macros de movimento do cursor.
+      Usar condição ternária: (EXPR) ? EXPR1 : EXPR2; no argumento de formato.
+
+Refatorar initialize().
+  Trocar \n por cpl (evita "estouro" da tela).
+
+Corrigir quando margens nulas (0, 0) ou semi-nulas (x ou y = 0).
+  Adicionar compilação condicional ao avançar cursor no final da funcao initialize
+    > #if (VMARGIN > 0)
+    >   CUF(VMARGIN);
+    > #endif
+
