@@ -50,7 +50,6 @@
 #define CUP(x)                                                       \
   if (x > 0)                                                         \
     printf(ESC CSI "%i;%iH", ((x) > MAX_ESC_VAL) ? MAX_ESC_VAL : (x) \
-		                        ((x) > MAX_ESC_VAL) ? MAX_ESC_VAL : (x))
 
 /* ED: Erase Display */
 #define ED() printf(ESC CSI "2J")
