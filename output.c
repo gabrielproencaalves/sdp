@@ -56,7 +56,7 @@ void initialize(void)
       else
 	putchar(' ');
     }
-    putchar('\n');
+    CNL(1);
   }
   CPL(MAXHEIGHT - HMARGIN); /* Go to the first empty */
   CUF(VMARGIN);             /* position inside square */
