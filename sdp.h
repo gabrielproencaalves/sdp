@@ -10,6 +10,9 @@ int printc(char);
 /* prints(s): print the string s on panel */
 int prints(char*);
 
+/* printsn(s, n): print s at maximum n characters */
+int printsn(char*, int);
+
 /* movecur(x, y): moves the cursor to x and y */
 void movecur(int, int);
 

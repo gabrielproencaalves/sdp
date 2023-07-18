@@ -102,10 +102,22 @@ int prints(char *s)
   int i;
 
   for (i = 0; s[i] != '\0'; ++i) /* Until reaching the end of s */
-    if(!printc(s[i])) /* If chars cannot be printed */
+    if (!printc(s[i])) /* If chars cannot be printed */
       return 0; /* Bad signal */
 
   return i; /* Return number of printed characters */
+}
+
+/* printsn(s, n): print s at maximum n characters */
+int printsn(char* s, int n)
+{
+  int i;
+
+  for (i = 0; s[i] != '\0' && i < n; i++)
+    if (!printc(s[i]))
+      return 0;
+
+  return i;
 }
 
 /* movecur(x, y): moves the cursor to x and y */
