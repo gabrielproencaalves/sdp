@@ -6,18 +6,24 @@ static int CURSOR_X;    /* Current X cursor position */
 static int CURSOR_Y;    /* Current Y cursor position */
 static int LAST_PRINTL; /* Last printed line         */
 
+/* This macro moves the cursor x times to the right
+   and updates the variable CURSOR_X */
 #define CURSOR_FORWARD(x) \
   do {                    \
     CUF((x));             \
     CURSOR_X += (x);      \
   } while (0)
 
+/* This macro moves the cursor x times to the left
+   and updates the variable CURSOR_X */
 #define CURSOR_BACKWARD(x) \
   do {                     \
     CUB((x));              \
     CURSOR_X -= (x);       \
   } while (0)
 
+/* This macro moves the cursor up x times
+   and updates the variable CURSOR_Y */
 #define CURSOR_UPWARD(x)         \
   do {                           \
     CPL((x));                    \
@@ -25,6 +31,8 @@ static int LAST_PRINTL; /* Last printed line         */
     CUF(CURSOR_X + VMARGIN - 1); \
   } while (0)
 
+/* This macro moves the cursor down x times
+   and updates the variable CURSOR_Y */
 #define CURSOR_DOWNWARD(x)       \
   do {                           \
     CNL((x));                    \
@@ -74,21 +82,24 @@ int newline(void)
     return 0; /* Bad signal */
 
   CURSOR_DOWNWARD(1);  /* Move cursor down */
-  CURSOR_BACKWARD(CURSOR_X - 1); /* move cursor to first column */
+  CURSOR_BACKWARD(CURSOR_X - 1); /* Move cursor to first column */
 
-  return 1; /* oh yeah */
+  return 1; /* Good signal */
 }
 
-/* printc(c): print the character c on panel*/
+/* printc(c): print the character c on panel */
 int printc(char c)
 {
   /* If cursor reaches the margin or */
-  /* the character to be printed is a newline*/
+  /* the character to be printed is a newline */
   if ((CURSOR_X == MAXWIDTH - VMARGIN) || (c == '\n'))
-    return (!newline()) ? 0 : 1;
+    if (!newline())
+      return 0;
 
-
+  /* If the new line printed is less */
+  /* than the variable LAST_PRINTL */
   if (CURSOR_Y > LAST_PRINTL)
+    /* Update variable LAST_PRINTL */
     LAST_PRINTL = CURSOR_Y;
 
   putchar(c);
@@ -101,8 +112,10 @@ int prints(char *s)
 {
   int i;
 
-  for (i = 0; s[i] != '\0'; ++i) /* Until reaching the end of s */
-    if (!printc(s[i])) /* If chars cannot be printed */
+  /* Until reaching the end of s */
+  for (i = 0; s[i] != '\0'; ++i)
+    /* If chars cannot be printed */
+    if (!printc(s[i]))
       return 0; /* Bad signal */
 
   return i; /* Return number of printed characters */
@@ -113,19 +126,23 @@ int printsn(char* s, int n)
 {
   int i;
 
+  /* Until reaching the end of s and not passing the limit */
   for (i = 0; s[i] != '\0' && i < n; i++)
+    /* If chars cannot be printed */
     if (!printc(s[i]))
-      return 0;
+      return 0; /* Bad signal */
 
-  return i;
+  return i; /* Return number of printed characters */
 }
 
 /* movecur(x, y): moves the cursor to x and y */
 void movecur(int x, int y)
 {
+  /* Checks if parameters extrapolate margin */
   if (x > MAXWIDTH || y > MAXHEIGHT)
     return;
 
+  /* Just moves x if it is different of request */
   if (CURSOR_X != x) {
     if (CURSOR_X > x)
       CURSOR_BACKWARD(CURSOR_X - x);
@@ -133,6 +150,7 @@ void movecur(int x, int y)
       CURSOR_FORWARD(x - CURSOR_X);
   }
 
+  /* Just moves y if it is different of request */
   if (CURSOR_Y != y) {
     if (CURSOR_Y > y)
       CURSOR_UPWARD(CURSOR_Y - y);
@@ -152,7 +170,10 @@ void clearc(int x)
 void clearl(void)
 {
   CURSOR_BACKWARD(CURSOR_X - 1);
+
+  /* Clears the line */
   clearc(MAXWIDTH - VMARGIN * 2);
+
   CURSOR_BACKWARD(CURSOR_X - 1);
 }
 
