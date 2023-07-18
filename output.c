@@ -36,6 +36,7 @@ static int LAST_PRINTL; /* Last printed line         */
 void initialize(void)
 {
 
+#if (HMARGIN > 0) && (VMARGIN > 0)
   for (CURSOR_Y = 0; CURSOR_Y < MAXHEIGHT; ++CURSOR_Y) {
     for (CURSOR_X = 0; CURSOR_X < MAXWIDTH; ++CURSOR_X) {
 
@@ -60,6 +61,7 @@ void initialize(void)
   }
   CPL(MAXHEIGHT - HMARGIN); /* Go to the first empty */
   CUF(VMARGIN);             /* position inside square */
+#endif
 
   CURSOR_X = CURSOR_Y = 1; /* Define x/y cursor coordinates */
 }
