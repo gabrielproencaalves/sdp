@@ -21,13 +21,13 @@ int get_words(void)
 
     else {
       if (nc > 0) {
-	buf[nc++] = '\0';
-	input_word_array[input_word_count] = malloc(sizeof(int) * nc);
-	memmove(input_word_array[input_word_count++], buf, nc);
-	nc = 0;
+      	buf[nc++] = '\0';
+      	input_word_array[input_word_count] = malloc(sizeof(int) * nc);
+      	memmove(input_word_array[input_word_count++], buf, nc);
+      	nc = 0;
       }
       if (c == '\n')
-	break;
+      	break;
     }
   }
   return input_word_count;

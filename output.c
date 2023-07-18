@@ -42,19 +42,19 @@ void initialize(void)
       /* If CURSOR_X and CURSOR_Y in the corner */
       if (   (CURSOR_X < VMARGIN || CURSOR_X > MAXWIDTH-VMARGIN-1)
           && (CURSOR_Y < HMARGIN || CURSOR_Y > MAXHEIGHT-HMARGIN-1))
-	putchar(CORNER_CHAR); /* Print the corner char*/
+      	putchar(CORNER_CHAR); /* Print the corner char*/
 
       /* If CURSOR_X in vert. margin */
       else if (CURSOR_X < VMARGIN || CURSOR_X > MAXWIDTH-VMARGIN-1)
-	putchar(VSIDE_CHAR); /* Print the vert. margin char */
+      	putchar(VSIDE_CHAR); /* Print the vert. margin char */
 
       /* If CURSOR_Y in hor. margin */
       else if (CURSOR_Y < HMARGIN || CURSOR_Y > MAXHEIGHT-HMARGIN-1)
-	putchar(HSIDE_CHAR); /* Print the hor. margin char */
+       	putchar(HSIDE_CHAR); /* Print the hor. margin char */
 
       /* Else, just print a space */
       else
-	putchar(' ');
+      	putchar(' ');
     }
     CNL(1);
   }

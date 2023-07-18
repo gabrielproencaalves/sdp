@@ -14,7 +14,7 @@ int prints(char*);
 void movecur(int, int);
 
 /* clearc(x): clears x characters */
-void clearc(int x);
+void clearc(int);
 
 /* clearl:  clears the line or x characters */
 void clearl(void);
