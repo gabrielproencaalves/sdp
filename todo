@@ -1,6 +1,0 @@
-Corrigir quando margens nulas (0, 0) ou semi-nulas (x ou y = 0).
-  Adicionar compilação condicional ao avançar cursor no final da funcao initialize
-    > #if (VMARGIN > 0)
-    >   CUF(VMARGIN);
-    > #endif
-
