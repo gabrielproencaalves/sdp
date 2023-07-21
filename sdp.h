@@ -1,3 +1,5 @@
+/* ======= OUTPUT ======= */
+
 /* initialize: set up panel and variables */
 void initialize(void);
 
@@ -25,3 +27,7 @@ void clearl(void);
 /* clear: clears the panel */
 void clear(void);
 
+/* ======= INPUT ======= */
+
+/* readline: Reads at most x characters from stdin */
+int readline(int n);
