@@ -20,3 +20,11 @@ int readline(int n)
   BUFFER[i] = '\0';
   return i;
 }
+
+int prompt(int n, const char* s)
+{
+  /* todo: move cursor to insertion area */
+  /* before print s and readline */
+  prints(s);
+  return readline(n);
+}

@@ -30,4 +30,7 @@ void clear(void);
 /* ======= INPUT ======= */
 
 /* readline: Reads at most x characters from stdin */
-int readline(int n);
+int readline(int);
+
+/* prompt: print string and receive at most x characters from stdin */
+int prompt(int, const char*);
